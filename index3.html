@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeanCraft - 프리미엄 커피 구독 서비스</title>
+  <style>
+    :root {
+      --dark-brown: #3b2f2f;
+      --cream-beige: #f7f3ef;
+      --mint: #87cbb9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--cream-beige);
+      color: var(--dark-brown);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: var(--dark-brown);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    header nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    header nav a:hover {
+      color: var(--mint);
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 3rem 2rem;
+      background: url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1350&q=80") center/cover no-repeat;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+      min-height: 80vh;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-btn {
+      background: var(--mint);
+      color: var(--dark-brown);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: transform 0.3s, background 0.3s;
+      animation: pulse 2s infinite;
+    }
+
+    .cta-btn:hover {
+      background: #6fae9e;
+      transform: scale(1.05);
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features, .products, .reviews, .cta-banner, .faq, footer {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .features h3, .products h3, .reviews h3, .faq h3 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .products img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .reviews blockquote {
+      font-style: italic;
+      margin: 1rem 0;
+    }
+
+    .cta-banner {
+      background: var(--dark-brown);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      margin: 2rem;
+    }
+
+    .cta-banner form {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-banner input {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 6px 0 0 6px;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .cta-banner button {
+      padding: 0.8rem 1.2rem;
+      border: none;
+      background: var(--mint);
+      color: var(--dark-brown);
+      font-weight: bold;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+    .faq details {
+      margin: 1rem 0;
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    footer {
+      background: var(--dark-brown);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0.5rem 0;
+    }
+
+    .socials {
+      margin-top: 1rem;
+    }
+
+    .socials a {
+      margin: 0 0.5rem;
+      color: var(--mint);
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: white;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @media(max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>BeanCraft</h1>
+    <nav>
+      <a href="#features">특징</a>
+      <a href="#products">제품</a>
+      <a href="#reviews">후기</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>프리미엄 커피를 매일, 집에서</h2>
+      <p>72시간 내 로스팅된 신선한 원두를 무료 익일 배송으로 받아보세요.<br>첫 구독 시 40% 할인 혜택!</p>
+      <button class="cta-btn">첫 구독 시작하기</button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <h3>BeanCraft만의 혜택</h3>
+    <div class="feature-cards">
+      <div class="card">
+        <h4>72시간 내 로스팅</h4>
+        <p>주문 즉시 로스팅된 신선한 원두만 배송됩니다.</p>
+      </div>
+      <div class="card">
+        <h4>첫 구독 40% 할인</h4>
+        <p>지금 시작하면 특별한 할인 혜택을 누려보세요.</p>
+      </div>
+      <div class="card">
+        <h4>무료 익일 배송</h4>
+        <p>로스팅 후 하루 만에 신선하게 받아보세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <h3>추천 구독 원두</h3>
+    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&q=80" alt="커피 원두">
+    <p>다양한 원산지와 로스트 레벨을 선택할 수 있어, 취향에 맞는 커피를 매월 받아볼 수 있습니다.</p>
+  </section>
+
+  <!-- Reviews -->
+  <section class="reviews" id="reviews">
+    <h3>고객 후기</h3>
+    <blockquote>"매번 신선한 커피를 집에서 즐길 수 있어 만족합니다!" - 지현 ⭐⭐⭐⭐⭐</blockquote>
+    <blockquote>"배송이 정말 빠르고 맛도 훌륭해요." - 민수 ⭐⭐⭐⭐⭐</blockquote>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <h3>BeanCraft 소식을 받아보세요</h3>
+    <form>
+      <input type="email" placeholder="이메일 주소를 입력하세요" required>
+      <button type="submit">구독하기</button>
+    </form>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <h3>자주 묻는 질문</h3>
+    <details>
+      <summary>배송은 얼마나 걸리나요?</summary>
+      <p>로스팅 후 익일 배송을 원칙으로 하여 빠르게 받아보실 수 있습니다.</p>
+    </details>
+    <details>
+      <summary>구독 취소는 언제든 가능한가요?</summary>
+      <p>네, 언제든 간단하게 구독을 취소하실 수 있습니다.</p>
+    </details>
+    <details>
+      <summary>원두 종류는 어떻게 선택하나요?</summary>
+      <p>구독 신청 시 다양한 원산지와 로스트 레벨을 선택할 수 있습니다.</p>
+    </details>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 BeanCraft. All Rights Reserved.</p>
+    <p>Contact: support@beancraft.com</p>
+    <div class="socials">
+      <a href="#">📘</a>
+      <a href="#">📷</a>
+      <a href="#">🐦</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animation
+    const sections = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          sec.classList.add("visible");
+        }
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  </script>
+</body>
+</html>
